@@ -108,6 +108,7 @@ void main() {
 	// fine
 	let(thing.getDescription(), String::toUpperCase);
 }
+```
 	
 
 ## Examples
