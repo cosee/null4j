@@ -54,7 +54,7 @@ String s = orDefault(someMap.get(key), "");
 doSomethingWith(s);
 
 
-// null4j works everywhere:
+// null4j can wrap any function:
 
 String t = orDefault(anyOtherNullableFunction(), "");
 
@@ -103,7 +103,7 @@ void main() {
 	thing.getName().toUpperCase();
 
 	// Will be flagged by IntelliJ
-	thing.getDescription().toUpperCase(); :x:
+	thing.getDescription().toUpperCase();❌
 
 	// fine
 	let(thing.getDescription(), String::toUpperCase);
@@ -112,23 +112,6 @@ void main() {
 	
 
 ## Examples
-
-### Safe Navigation
-
-Suppose you have some classes that can be nested. With let, you can easily reach into them.
-
-```java
-@Data class Person  { int id; @Nullable Address; }
-@Data class Address { @Nullable Street street; }
-@Data class Street  { String streetName; }
-
-@Nullable String getStreetName(Person person) {
-	return let(person,
-		Person::getAddress,
-		Address::getStreet,
-		Street::getStreetName);
-}
-```
 
 ### Default Parameters
 
@@ -161,7 +144,24 @@ void displayInfo(
 }
 ```
 
-### FP style combinations of orDefault and let
+### Safe Navigation
+
+Suppose you have some classes that can be nested. With let, you can easily reach into them.
+
+```java
+@Data class Person  { int id; @Nullable Address; }
+@Data class Address { @Nullable Street street; }
+@Data class Street  { String streetName; }
+
+@Nullable String getStreetName(Person person) {
+	return let(person,
+		Person::getAddress,
+		Address::getStreet,
+		Street::getStreetName);
+}
+```
+
+### Combining orDefault and let
 
 ```java
 return orDefault(let(person,
@@ -171,6 +171,19 @@ return orDefault(let(person,
 ), "NO COMMENT");
 ```
 
+### Nesting let to bind multiple values at once
+
+```java
+let(getNullableA(), a ->
+let(getNullableB(), b ->
+let(getNullableC(), c -> {
+
+	System.out.println("All three are present");
+
+	doSomethingWithAllThree(a, b, c);
+
+})));
+```
 
 ## Refactoring existing code
 
