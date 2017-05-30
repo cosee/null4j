@@ -109,7 +109,6 @@ void main() {
 	let(thing.getDescription(), String::toUpperCase);
 }
 ```
-	
 
 ## Examples
 
@@ -127,7 +126,7 @@ void displayName(String name) {
 }
 ```
 
-However, this can get confusion when dealing with many parameters. Instead, you can use orDefault and the fact that parameters are variables to implement defalut parameters:
+However, this can get confusion when dealing with many parameters. Instead, you can use orDefault and the fact that parameters are variables to implement default parameters:
 
 ```java
 void displayInfo(
@@ -139,7 +138,7 @@ void displayInfo(
 ) {
 	name = orDefault(name, "no name");
 	comment = orDefault(comment, "");
-	designation = orDefault("no designation");
+	designation = orDefault(designation, "no designation");
 	// ...
 }
 ```
