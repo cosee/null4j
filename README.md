@@ -1,6 +1,4 @@
-(Logo screenshot png 452x167)
-
-### null4j
+(Logo with null4j in it png 452x167)
 
 Simplified null-handling.
 
