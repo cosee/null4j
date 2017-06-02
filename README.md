@@ -2,6 +2,8 @@
 
 Simplified null-handling.
 
+This library helps you keep your code clean when dealing with nullable values.
+
 (Screenshot with functions and error)
 
 ## Features
@@ -35,9 +37,8 @@ if(s == null) {
 }
 
 doSomethingWith(s);
-```
 
-```java
+
 // Java 8:
 
 String s = someMap.getOrDefault(key, "");
@@ -143,7 +144,7 @@ void displayInfo(
 
 ### Safe Navigation
 
-Suppose you have some classes that can be nested. With let, you can easily reach into them.
+Suppose you have some classes that can be nested. With let, you can easily reach into them. All without worrying about nullpointer exceptions on the way to the desired value.
 
 ```java
 @Data class Person  { int id; @Nullable Address; }
@@ -203,7 +204,7 @@ Null handling like this distracts from the actual intention of a function. Funct
 	if(thing == null) {
 		return null;
 	} else {
-		return "It's very " + thing.getQuality;
+		return "It's very " + thing.getQuality();
 	}
 }
 
@@ -224,7 +225,7 @@ Instead, simplify your functions by moving the null handling to the call site:
 
 // clean, function does one thing only.
 String format(Thing thing) {
-	return "It's very " + thing.getQuality;
+	return "It's very " + thing.getQuality();
 }
 
 void main() {
