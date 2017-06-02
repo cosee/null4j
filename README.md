@@ -64,7 +64,7 @@ doSomethingWith(t);
 A fluent map/flatMap for nullable types that works similar to Optional::map and Optional::flatMap. The type signature can't be expressed in Java directly (type aligned sequence), but it typechecks none the less.
 
 ```java
-<T> @Nullable 🌀 let(@Nullable T value, Function<🌀, @Nullable 🌀>... functions)
+<⬤> @Nullable ⬤ let(@Nullable ⬤ value, Function<⬤, @Nullable ⬤>... functions)
 ```
 
 Also, if the last parameter is a consumer, let returns void.
