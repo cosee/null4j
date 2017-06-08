@@ -62,7 +62,6 @@ Annotating packages requires you to create a package-info.java file in the packa
 A package-info.java file would look like this:
 
 ```java
-
 @NotNullByDefault
 package com.example.the.package.that.contains.this.package.info.java.file;
 
@@ -133,7 +132,6 @@ The parameters must form a typed aligned sequence. If the last parameter is a Co
 #### Example
 
 ```java
-
 @Nullable String getName() { /* ... */ }
 
 Map<String, String> someMap = // ...
@@ -150,7 +148,6 @@ void example() {
 		someMap::get,
 		System.out::println
 );
-
 ```
 
 ## Mockito support
@@ -162,7 +159,6 @@ It will flag errors when you try to mock something with wrong types e.g. if the 
 Nullability annotations are copied to generated getters/setters.
 
 ```java
-
 @Data
 class Thing {
 	String name;
@@ -181,7 +177,6 @@ void main() {
 	// fine
 	let(thing.getDescription(), String::toUpperCase);
 }
-
 ```
 
 ## Examples
@@ -191,7 +186,6 @@ void main() {
 If method overloading is not an option because the method has too many parameters, orDefault can be used to declare default values for nullable parameters.
 
 ```java
-
 void displayInfo(
 	String id,
 	@Nullable String name,
@@ -207,7 +201,6 @@ void displayInfo(
 
 	// ...
 }
-
 ```
 
 ### Safe Navigation
@@ -215,7 +208,6 @@ void displayInfo(
 Suppose you have some nested types. With let, you can easily reach into them without worrying about nullpointer exceptions.
 
 ```java
-
 @Data class Person  { int id; @Nullable Address; }
 @Data class Address { @Nullable Street street; }
 @Data class Street  { String name; }
@@ -226,19 +218,16 @@ Suppose you have some nested types. With let, you can easily reach into them wit
 		Address::getStreet,
 		Street::getName);
 }
-
 ```
 
 ### Combining orDefault and let
 
 ```java
-
 return orDefault(let(person,
 	Person::getId,
 	commentMap::get,
 	String::toUpperCase
 ), "NO COMMENT");
-
 ```
 
 ### Nesting let to bind multiple values at once
@@ -296,7 +285,6 @@ Instead, simplify your functions by moving the null handling to the call site:
 
 
 ```java
-
 // simple: function does only one thing
 String format(Thing thing) {
 	return "It's very " + thing.getQuality();
