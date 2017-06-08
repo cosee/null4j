@@ -256,10 +256,12 @@ It's not yet in Maven Central, but you can get it from JCenter:
 
 ### IntelliJ
 
-You need to adjust two checker settings.
+You need to change two checker settings:
 
-(Screenshot setting 1)
-(Screenshot setting 2)
+![Constant conditions & exceptions](intellij1.png)
+
+![@NotNull/@Nullable problems](intellij2.png)
+
 (Screenshot with code and checker violation)
 
 
