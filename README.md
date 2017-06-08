@@ -1,49 +1,90 @@
-(Logo with null4j in it png 452x167)
+# null4j
 
 With null4j, your code will have less NullPointerExceptions and more readable null checks.
 
 ```java
+
 @NotNullByDefault
 class Example {
 
-	@Getter class Person  { int id; @Nullable Address; }
+	// only annotate nullable fields, everything else will be NotNull by default
+	@Getter class Person  { Integer id; @Nullable Address; }
 	@Getter class Address { @Nullable Street street; }
 	@Getter class Street  { String streetName; }
 
+	@Nullable Street getStreet(Person person) {
+		// Use safe navigation to reach into objects without NPE
+		return let(person,
+			Person::getAddress,
+			Address:getStreet);
+	}
+
+	// implicitely NotNull
 	String getStreetName(Person person) {
 
-		@Nullable String streetName =
-			 let(person,
+		// avoid returning null by using a default value
+		return orDefault(let(person,
 				Person::getAddress,
 				Address::getStreet,
-				Street::getStreetName);
-
-
-		return orDefault(streetName, "could not find street name");
+				Street::getStreetName
+		), "could not find street name");
 
 	}
 }
+
 ```
 
 ## Features
 
-### Annotation
+To keep it simple, null4j only contains three features:
+
+  - @NotNullByDefault
+  - orDefault
+  - let
+
+### @NotNullByDefault
+
+This meta annotation can be applied to classes and packages. Everything will be implicitely annotated with @NotNull unless it is explicitely annotated with @Nullable.
+
+#### Annotating classes
+
+Using the annotation on a class works like usual:
 
 ```java
 @NotNullByDefault
+class SomeClass { /* ... */ }
 ```
 
-This meta annotation can be applied to classes and packages. Everything will be implicitely annotated with @NotNull unless it is explicitely annotated with @Nullable.
+#### Annotating packages
+
+Annotating packages requires you to create a package-info.java file in the package that you want to annotate.
+
+A package-info.java file would look like this:
+
+```java
+
+@NotNullByDefault
+package com.example.the.package.that.contains.this.package.info.java.file;
+
+import biz.cosee.null4j.NotNullByDefault;
+
+```
+
+The order is important: It won't work if you put the import before the annotation.
+
+Note: The annotation does not work recursively yet so sub packages need their own package-info.java.
 
 ### orDefault
 
 ```java
-<T> T orDefault((@Nullable T)... nullables, T fallback)
+<T> T orDefault((@Nullable T)... nullables, T defaultValue)
 ```
 
 Returns the first not null parameter. The last parameter must not be null.
 
 This is similar to SQL's coalesce or Javascript's || except that having null as the last parameter is not allowed.
+
+#### Example
 
 ```java
 // Java 7:
@@ -70,11 +111,13 @@ String s = orDefault(someMap.get(key), "");
 doSomethingWith(s);
 
 
-// null4j can wrap any function:
+void example(@Nullable Thing thing) {
 
-Thing t = orDefault(anyOtherNullableFunction(), Things.STANDARD_THING);
+	Thing t = orDefault(thing, Things.STANDARD_THING);
 
-doSomethingWith(t);
+	doSomethingWith(t);
+
+}
 ```
 
 ### let 
@@ -85,20 +128,29 @@ A fluent map/flatMap for nullable types that works similar to Optional::map and 
 <⬤> @Nullable ⬤ let(@Nullable ⬤ value, Function<⬤, @Nullable ⬤>... functions)
 ```
 
-The functions must form a matching chain.
+The parameters must form a typed aligned sequence. If the last parameter is a Consumer, let returns void.
 
-Also, if the last parameter is a consumer, let returns void.
+#### Example
 
 ```java
-// like map
-@Nullable String maybeUpperCaseName = let(maybeName, String::toUpperCase);
 
-// map/flatMap chain that returns void and may or may not print to System.out
-let(maybeUpperCaseName,
-	someMap::get,
-	StringUtils::reverse,
-	System.out::println
+@Nullable String getName() { /* ... */ }
+
+Map<String, String> someMap = // ...
+
+
+void example() {
+
+	// like map
+	@Nullable String nullableUpperCaseName = let(getName(), String::toUpperCase);
+
+
+	// map/flatMap chain that returns void and may or may not print to System.out
+	let(nullableUpperCaseName,
+		someMap::get,
+		System.out::println
 );
+
 ```
 
 ## Mockito support
@@ -110,6 +162,7 @@ It will flag errors when you try to mock something with wrong types e.g. if the 
 Nullability annotations are copied to generated getters/setters.
 
 ```java
+
 @Data
 class Thing {
 	String name;
@@ -128,6 +181,7 @@ void main() {
 	// fine
 	let(thing.getDescription(), String::toUpperCase);
 }
+
 ```
 
 ## Examples
@@ -137,6 +191,7 @@ void main() {
 If method overloading is not an option because the method has too many parameters, orDefault can be used to declare default values for nullable parameters.
 
 ```java
+
 void displayInfo(
 	String id,
 	@Nullable String name,
@@ -144,40 +199,46 @@ void displayInfo(
 	Address address,
 	@Nullable String designation
 ) {
-	// set defaults for nullable parameters
+	// Set defaults for nullable parameters at the beginning of the method.
 	name = orDefault(name, "no name");
 	comment = orDefault(comment, "");
 	designation = orDefault(designation, "no designation");
 
+
 	// ...
 }
+
 ```
 
 ### Safe Navigation
 
-Suppose you have some types that can be nested. With let, you can easily reach into them, all without worrying about nullpointer exceptions on the way to the desired value.
+Suppose you have some nested types. With let, you can easily reach into them without worrying about nullpointer exceptions.
 
 ```java
+
 @Data class Person  { int id; @Nullable Address; }
 @Data class Address { @Nullable Street street; }
-@Data class Street  { String streetName; }
+@Data class Street  { String name; }
 
 @Nullable String getStreetName(Person person) {
 	return let(person,
 		Person::getAddress,
 		Address::getStreet,
-		Street::getStreetName);
+		Street::getName);
 }
+
 ```
 
 ### Combining orDefault and let
 
 ```java
+
 return orDefault(let(person,
 	Person::getId,
 	commentMap::get,
 	String::toUpperCase
 ), "NO COMMENT");
+
 ```
 
 ### Nesting let to bind multiple values at once
@@ -200,30 +261,32 @@ let(getNullableC(), c -> {
 
 ### Annotate classes instead of packages
 
-Experience shows that using the package annotation in legacy projects can be confusing: When you see a class that has no @NotNullByDefault annotation, is that because the package is already annotated or was it never annotated? The package annotation can also lead to problems when moving a class between annotated and non-annonated packages.
+Experience shows that using @NotNullByDefault as a package annotation in legacy projects can be confusing: When you see a class that has no @NotNullByDefault annotation, is that because the package is already annotated or was it never annotated? The package annotation can also lead to problems when moving a class between annotated and non-annonated packages.
 
 Only use the package annotation in new projects or when you annotated all of your legacy code.
 
 ### Remove null handling from functions.
 
-Null handling like this distracts from the actual intention of a function. Functions should only do one thing; if you add null handling they are doing two things:
+Avoid code like this:
 
 ```java
+// bad code
 
-// avoid this
 @Nullable String format(@Nullable Thing thing) {
+	// this function does two things at once
 	if(thing == null) {
 		return null;
 	} else {
+		// actually relevant code
 		return "It's very " + thing.getQuality();
 	}
 }
 
-void main() {
-	@Nullable String a = format(getNullableThing());
+void example(@Nullable Thing nullableThing, Thing thing) {
+	@Nullable String a = format(nullableThing);
 
-	// this is not really nullable
-	@Nullable String b = format(getNotNullableThing());
+	// this is actually never null.
+	@Nullable String b = format(thing);
 
 	// ...
 }
@@ -239,19 +302,22 @@ String format(Thing thing) {
 	return "It's very " + thing.getQuality();
 }
 
-void main() {
-	@Nullable String a = let(getNullableThing(), this::format);
+void example(@Nullable Thing nullableThing, Thing thing) {
 
-	// notice that no null handling is needed at all in this case.
-	String b = getDescription(getNotNullableThing());
+	@Nullable String a = let(nullableThing, this::format);
+
+	// no null handling needed
+	String b = format(thing);
 
 	// ...
 }
 ```
 
+Now the format function only does one thing instead of two and the type checker can verify that b is never null.
+
 ## Setup
 
-Using null4j is a two step process: Add the library to your pom/gradle file and configure IntelliJ to perform stricter tests.
+Using null4j is a two step process: Add the library to your pom/gradle file, then configure IntelliJ to perform stricter tests.
 
 ### Dependency
 
