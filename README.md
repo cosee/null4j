@@ -1,10 +1,29 @@
 (Logo with null4j in it png 452x167)
 
-Simplified null-handling.
+With null4j, your code will have less NullPointerExceptions and more readable null checks.
 
-This library helps you keep your code clean when dealing with nullable values.
+```java
+@NotNullByDefault
+class Example {
 
-(Screenshot with functions and error)
+	@Getter class Person  { int id; @Nullable Address; }
+	@Getter class Address { @Nullable Street street; }
+	@Getter class Street  { String streetName; }
+
+	String getStreetName(Person person) {
+
+		@Nullable String streetName =
+			 let(person,
+				Person::getAddress,
+				Address::getStreet,
+				Street::getStreetName);
+
+
+		return orDefault(streetName, "could not find street name");
+
+	}
+}
+```
 
 ## Features
 
@@ -14,7 +33,7 @@ This library helps you keep your code clean when dealing with nullable values.
 @NotNullByDefault
 ```
 
-This meta annotation can be applied to classes and packages. 
+This meta annotation can be applied to classes and packages. Everything will be implicitely annotated with @NotNull unless it is explicitely annotated with @Nullable.
 
 ### orDefault
 
@@ -24,9 +43,7 @@ This meta annotation can be applied to classes and packages.
 
 Returns the first not null parameter. The last parameter must not be null.
 
-This is similar to SQL's coalesce or Javascript's ||.
-
-The name of the function stems from Java8 Map's getOrDefault method:
+This is similar to SQL's coalesce or Javascript's || except that having null as the last parameter is not allowed.
 
 ```java
 // Java 7:
@@ -55,34 +72,38 @@ doSomethingWith(s);
 
 // null4j can wrap any function:
 
-String t = orDefault(anyOtherNullableFunction(), "");
+Thing t = orDefault(anyOtherNullableFunction(), Things.STANDARD_THING);
 
 doSomethingWith(t);
 ```
 
 ### let 
 
-A fluent map/flatMap for nullable types that works similar to Optional::map and Optional::flatMap. The type signature can't be expressed in Java directly (type aligned sequence), but it typechecks none the less.
+A fluent map/flatMap for nullable types that works similar to Optional::map and Optional::flatMap.
 
 ```java
 <⬤> @Nullable ⬤ let(@Nullable ⬤ value, Function<⬤, @Nullable ⬤>... functions)
 ```
 
+The functions must form a matching chain.
+
 Also, if the last parameter is a consumer, let returns void.
 
 ```java
 // like map
-@Nullable String s = let(maybeName, String::toUpperCase);
+@Nullable String maybeUpperCaseName = let(maybeName, String::toUpperCase);
 
 // map/flatMap chain that returns void and may or may not print to System.out
-let(s, someMap::get, StringUtils::reverse, System.out::println);
+let(maybeUpperCaseName,
+	someMap::get,
+	StringUtils::reverse,
+	System.out::println
+);
 ```
 
 ## Mockito support
 
-It will flag errors when you try to mock something with wrong types.
-
-(Mockito screenshot)
+It will flag errors when you try to mock something with wrong types e.g. if the original method never returns null mocking it as always returning null will be an error.
 
 ## Lombok support
 
@@ -113,19 +134,7 @@ void main() {
 
 ### Default Parameters
 
-To create default parameters, the usual solution is to overload methods with variants that take less parameters.
-
-```java
-void displayName() {
-	displayName("no name");
-}
-
-void displayName(String name) {
-	//...
-}
-```
-
-However, this can get confusion when dealing with many parameters. Instead, you can use orDefault and the fact that parameters are variables to implement default parameters:
+If method overloading is not an option because the method has too many parameters, orDefault can be used to declare default values for nullable parameters.
 
 ```java
 void displayInfo(
@@ -135,16 +144,18 @@ void displayInfo(
 	Address address,
 	@Nullable String designation
 ) {
+	// set defaults for nullable parameters
 	name = orDefault(name, "no name");
 	comment = orDefault(comment, "");
 	designation = orDefault(designation, "no designation");
+
 	// ...
 }
 ```
 
 ### Safe Navigation
 
-Suppose you have some classes that can be nested. With let, you can easily reach into them. All without worrying about nullpointer exceptions on the way to the desired value.
+Suppose you have some types that can be nested. With let, you can easily reach into them, all without worrying about nullpointer exceptions on the way to the desired value.
 
 ```java
 @Data class Person  { int id; @Nullable Address; }
@@ -171,12 +182,14 @@ return orDefault(let(person,
 
 ### Nesting let to bind multiple values at once
 
+This is similar to declaring variables, except that the null checks are included already.
+
 ```java
 let(getNullableA(), a ->
 let(getNullableB(), b ->
 let(getNullableC(), c -> {
 
-	System.out.println("All three are present");
+	System.out.println("All three are not null");
 
 	doSomethingWithAllThree(a, b, c);
 
@@ -184,8 +197,6 @@ let(getNullableC(), c -> {
 ```
 
 ## Refactoring existing code
-
-Some useful suggestions. 
 
 ### Annotate classes instead of packages
 
@@ -223,7 +234,7 @@ Instead, simplify your functions by moving the null handling to the call site:
 
 ```java
 
-// clean, function does one thing only.
+// simple: function does only one thing
 String format(Thing thing) {
 	return "It's very " + thing.getQuality();
 }
@@ -244,9 +255,9 @@ Using null4j is a two step process: Add the library to your pom/gradle file and 
 
 ### Dependency
 
-#### Maven
+(Available soon)
 
-It's not yet in Maven Central, but you can get it from JCenter:
+#### Maven
 
 (XML goes here)
 
@@ -262,6 +273,7 @@ You need to change two checker settings:
 
 ![@NotNull/@Nullable problems](intellij2.png)
 
-(Screenshot with code and checker violation)
+## Contributing
 
+Contributions are welcome! Contact Michael Zinn on [Github](https://github.com/RedNifre) or [Twitter](https://twitter.com/RedNifre).
 
