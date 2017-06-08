@@ -3,7 +3,6 @@
 With null4j, your code will have less NullPointerExceptions and more readable null checks.
 
 ```java
-
 @NotNullByDefault
 class Example {
 
@@ -31,7 +30,6 @@ class Example {
 
 	}
 }
-
 ```
 
 ## Features
@@ -66,7 +64,6 @@ A package-info.java file would look like this:
 package com.example.the.package.that.contains.this.package.info.java.file;
 
 import biz.cosee.null4j.NotNullByDefault;
-
 ```
 
 The order is important: It won't work if you put the import before the annotation.
