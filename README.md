@@ -144,7 +144,9 @@ void example() {
 	let(nullableUpperCaseName,
 		someMap::get,
 		System.out::println
-);
+	);
+
+}
 ```
 
 ## Mockito support
@@ -162,7 +164,7 @@ class Thing {
 	@Nullable String description;
 }
 
-void main() {
+void example() {
 	Thing thing = getSomeThing();
 
 	// fine
