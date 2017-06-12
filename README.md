@@ -1,4 +1,4 @@
-# null4j
+![null4j logo](null4jlogosmall.png)
 
 With null4j, your code will have less NullPointerExceptions and more readable null checks.
 
