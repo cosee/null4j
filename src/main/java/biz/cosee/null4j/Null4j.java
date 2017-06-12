@@ -14,6 +14,7 @@ import java.util.function.Function;
 @NotNullByDefault
 public class Null4j {
 
+
     /**
      * Returns the first parameter that is not null.
      * <p>
@@ -538,6 +539,24 @@ public class Null4j {
      * @param fs A typed sequence of functions.
      * @return Result or null if the last parameter is a function, otherwise void
      */
+    public static <T>
+    void let(
+            @Nullable T t,
+            Consumer<? super T> c_T
+    ) {
+        if (t == null) return;
+        c_T.accept(t);
+    }
+
+    /**
+     * Threads the first parameter through the following function parameters.
+     * <p>
+     * Aborts and returns null when any step in the sequence returns null, otherwise it returns the result of the last function or void if the last parameter is a Consumer.
+     *
+     * @param t  Input value, may be null.
+     * @param fs A typed sequence of functions.
+     * @return Result or null if the last parameter is a function, otherwise void
+     */
     public static <T, U>
     void let(
             @Nullable T t,
@@ -780,5 +799,7 @@ public class Null4j {
         if (b == null) return;
         c_B.accept(b);
     }
+
+
 }
 

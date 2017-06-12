@@ -3,6 +3,7 @@ package biz.cosee.null4j;
 import org.jetbrains.annotations.Nullable;
 import org.junit.Test;
 
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 import static biz.cosee.null4j.Null4j.let;
@@ -86,6 +87,43 @@ public class Null4jTest {
                 orDefault(null, null, "three"),
                 is("three")
         );
+
+        // it should support up to 10 parameters
+
+        assertThat(
+                orDefault(
+                        "1",
+                        "2",
+                        "3",
+                        "4",
+                        "5",
+                        "6",
+                        "7",
+                        "8",
+                        "9",
+                        "10"
+                ),
+                is("1")
+        );
+        assertThat(
+                orDefault(
+                        null,
+                        null,
+                        null,
+                        null,
+                        null,
+                        null,
+                        null,
+                        null,
+                        null,
+                        "10"
+                ),
+                is("10")
+        );
+
+        /* should not compile:
+        orDefault(null, null);
+        */
     }
 
     @Test
@@ -100,6 +138,47 @@ public class Null4jTest {
         assertThat(
                 let("test", String::length, Object::toString),
                 is("4")
+        );
+
+
+        String[] mutable = new String[]{"1"};
+
+        let("?", o -> { mutable[0] = "2"; });
+        assertThat( mutable[0], is("2") );
+
+        let(null, o -> { mutable[0] = "3"; });
+        assertThat( mutable[0], is("2") );
+
+        // it should support up to 10 parameters.
+        assertThat(
+                let("chain",
+                        Function.identity(),
+                        Function.identity(),
+                        Function.identity(),
+                        Function.identity(),
+                        Function.identity(),
+                        Function.identity(),
+                        Function.identity(),
+                        Function.identity(),
+                        Function.identity()),
+                is("chain")
+        );
+
+
+        let("?",
+                Function.identity(),
+                Function.identity(),
+                Function.identity(),
+                Function.identity(),
+                Function.identity(),
+                Function.identity(),
+                Function.identity(),
+                Function.identity(),
+                o -> { mutable[0] = "10"; }
+        );
+        assertThat(
+                mutable[0],
+                is("10")
         );
     }
 
