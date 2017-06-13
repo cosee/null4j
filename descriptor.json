@@ -1,0 +1,26 @@
+{
+	"package": {
+		"name": "null4j",
+			"repo": "null4j",
+			"subject": "cosee",
+			"desc": "Simplified null handling",
+			"website_url": "https://github.com/cosee/null4j",
+			"issue_tracker_url": "https://github.com/cosee/null4j/issues",
+			"vcs_url": "https://github.com/cosee/null4j",
+			"licenses": ["Apache-2.0"],
+			"labels": ["java"],
+			"public_download_numbers": false,
+			"public_stats": false
+	},
+	 
+	"version": {
+	  "name": "0.9.0",
+	  "released": "2017-06-13",
+	  "gpgSign": false
+	},
+	 
+	"files": [
+		{"includePattern": "build/libs/(.*)", "uploadPattern": "biz/cosee/null4j/0.9.0/$1"}
+	],
+	"publish": true
+}
