@@ -17,6 +17,11 @@ dependencies {
     compile files('lib/annotations-java8.jar')
 }
 
+task sourcesJar(type: Jar, dependsOn: classes {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
 apply plugin: 'maven-publish'
  
 publishing {
