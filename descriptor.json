@@ -20,7 +20,7 @@
 	},
 	 
 	"files": [
-		{"includePattern": "build/libs/(.*)", "uploadPattern": "biz/cosee/null4j/0.9.0/$1"}
+		{"includePattern": "build/libs/(.*)", "uploadPattern": "biz/cosee/null4j/null4j/0.9.0/$1"}
 	],
 	"publish": true
 }
