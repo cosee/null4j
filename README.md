@@ -2,6 +2,8 @@
 
 With null4j, your code will have less NullPointerExceptions and more readable null checks.
 
+_v0.9.1_
+
 ```java
 @NotNullByDefault
 class Example {
@@ -15,7 +17,7 @@ class Example {
 		// Use safe navigation to reach into objects without NPE
 		return let(person,
 			Person::getAddress,
-			Address:getStreet);
+			Address::getStreet);
 	}
 
 	// implicitely NotNull
@@ -49,6 +51,8 @@ This meta annotation can be applied to classes and packages. Everything will be 
 Using the annotation on a class works like usual:
 
 ```java
+import biz.cosee.null4j.NotNullByDefault;
+
 @NotNullByDefault
 class SomeClass { /* ... */ }
 ```
@@ -121,7 +125,7 @@ void example(@Nullable Thing thing) {
 A fluent map/flatMap for nullable types that works similar to Optional::map and Optional::flatMap.
 
 ```java
-<⬤> @Nullable ⬤ let(@Nullable ⬤ value, Function<⬤, @Nullable ⬤>... functions)
+<*> @Nullable * let(@Nullable * value, Function<*, @Nullable *>... functions)
 ```
 
 The parameters must form a typed aligned sequence. If the last parameter is a Consumer, let returns void.
@@ -308,15 +312,37 @@ Using null4j is a two step process: Add the library to your pom/gradle file, the
 
 ### Dependency
 
-(Available soon)
+It's currently available on JCenter. Adding it to Maven Central is planned.
 
 #### Maven
 
-(XML goes here)
+```xml
+  <dependencies>
+  	<dependency>
+  		<groupId>biz.cosee.null4j</groupId>
+  		<artifactId>null4j</artifactId>
+  		<version>0.9.1</version>
+  	</dependency>
+  </dependencies>
+  <repositories>
+          <repository>
+            <id>jcenter</id>
+            <url>http://jcenter.bintray.com </url>
+        </repository>
+  </repositories>
+```
 
 #### Gradle
 
-(Groovy goes here)
+```groovy
+repositories {
+    jcenter()
+}
+
+dependencies {
+    compile 'biz.cosee.null4j:null4j:0.9.1'
+}
+```
 
 ### IntelliJ
 
