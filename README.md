@@ -2,7 +2,7 @@
 
 With null4j, your code will have less NullPointerExceptions and more readable null checks.
 
-_v0.9.1_
+_v0.9.2_
 
 ```java
 @NotNullByDefault
@@ -321,7 +321,7 @@ It's currently available on JCenter. Adding it to Maven Central is planned.
   	<dependency>
   		<groupId>biz.cosee.null4j</groupId>
   		<artifactId>null4j</artifactId>
-  		<version>0.9.1</version>
+  		<version>0.9.2</version>
   	</dependency>
   </dependencies>
   <repositories>
@@ -340,7 +340,7 @@ repositories {
 }
 
 dependencies {
-    compile 'biz.cosee.null4j:null4j:0.9.1'
+    compile 'biz.cosee.null4j:null4j:0.9.2'
 }
 ```
 

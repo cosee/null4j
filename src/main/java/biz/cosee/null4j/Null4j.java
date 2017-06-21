@@ -5,6 +5,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 
 /**
@@ -274,7 +275,8 @@ public class Null4j {
             Function<? super T, U> f_T_U
     ) {
         if(t == null) return null;
-        return f_T_U.apply(t);
+        @NotNull T nn_t = surely(t);
+        return f_T_U.apply(nn_t);
     }
 
     /**
@@ -293,9 +295,11 @@ public class Null4j {
             Function<? super U, V> f_U_V
     ) {
         if(t == null) return null;
-        @Nullable U u = f_T_U.apply(t);
+        @NotNull T nn_t = surely(t);
+        @Nullable U u = f_T_U.apply(nn_t);
         if(u == null) return null;
-        return f_U_V.apply(u);
+        @NotNull U nn_u = surely(u);
+        return f_U_V.apply(nn_u);
     }
 
     /**
@@ -315,11 +319,14 @@ public class Null4j {
             Function<? super V, W> f_V_W
     ) {
         if(t == null) return null;
-        @Nullable U u = f_T_U.apply(t);
+        @NotNull T nn_t = surely(t);
+        @Nullable U u = f_T_U.apply(nn_t);
         if(u == null) return null;
-        @Nullable V v = f_U_V.apply(u);
+        @NotNull U nn_u = surely(u);
+        @Nullable V v = f_U_V.apply(nn_u);
         if(v == null) return null;
-        return f_V_W.apply(v);
+        @NotNull V nn_v = surely(v);
+        return f_V_W.apply(nn_v);
     }
 
     /**
@@ -340,13 +347,17 @@ public class Null4j {
             Function<? super W, X> f_W_X
     ) {
         if(t == null) return null;
-        @Nullable U u = f_T_U.apply(t);
+        @NotNull T nn_t = surely(t);
+        @Nullable U u = f_T_U.apply(nn_t);
         if(u == null) return null;
-        @Nullable V v = f_U_V.apply(u);
+        @NotNull U nn_u = surely(u);
+        @Nullable V v = f_U_V.apply(nn_u);
         if(v == null) return null;
-        @Nullable W w = f_V_W.apply(v);
+        @NotNull V nn_v = surely(v);
+        @Nullable W w = f_V_W.apply(nn_v);
         if(w == null) return null;
-        return f_W_X.apply(w);
+        @NotNull W nn_w = surely(w);
+        return f_W_X.apply(nn_w);
     }
 
     /**
@@ -368,15 +379,20 @@ public class Null4j {
             Function<? super X, Y> f_X_Y
     ) {
         if(t == null) return null;
-        @Nullable U u = f_T_U.apply(t);
+        @NotNull T nn_t = surely(t);
+        @Nullable U u = f_T_U.apply(nn_t);
         if(u == null) return null;
-        @Nullable V v = f_U_V.apply(u);
+        @NotNull U nn_u = surely(u);
+        @Nullable V v = f_U_V.apply(nn_u);
         if(v == null) return null;
-        @Nullable W w = f_V_W.apply(v);
+        @NotNull V nn_v = surely(v);
+        @Nullable W w = f_V_W.apply(nn_v);
         if(w == null) return null;
-        @Nullable X x = f_W_X.apply(w);
+        @NotNull W nn_w = surely(w);
+        @Nullable X x = f_W_X.apply(nn_w);
         if(x == null) return null;
-        return f_X_Y.apply(x);
+        @NotNull X nn_x = surely(x);
+        return f_X_Y.apply(nn_x);
     }
 
     /**
@@ -399,17 +415,23 @@ public class Null4j {
             Function<? super Y, Z> f_Y_Z
     ) {
         if(t == null) return null;
-        @Nullable U u = f_T_U.apply(t);
+        @NotNull T nn_t = surely(t);
+        @Nullable U u = f_T_U.apply(nn_t);
         if(u == null) return null;
-        @Nullable V v = f_U_V.apply(u);
+        @NotNull U nn_u = surely(u);
+        @Nullable V v = f_U_V.apply(nn_u);
         if(v == null) return null;
-        @Nullable W w = f_V_W.apply(v);
+        @NotNull V nn_v = surely(v);
+        @Nullable W w = f_V_W.apply(nn_v);
         if(w == null) return null;
-        @Nullable X x = f_W_X.apply(w);
+        @NotNull W nn_w = surely(w);
+        @Nullable X x = f_W_X.apply(nn_w);
         if(x == null) return null;
-        @Nullable Y y = f_X_Y.apply(x);
+        @NotNull X nn_x = surely(x);
+        @Nullable Y y = f_X_Y.apply(nn_x);
         if(y == null) return null;
-        return f_Y_Z.apply(y);
+        @NotNull Y nn_y = surely(y);
+        return f_Y_Z.apply(nn_y);
     }
 
     /**
@@ -433,19 +455,26 @@ public class Null4j {
             Function<? super Z, A> f_Z_A
     ) {
         if(t == null) return null;
-        @Nullable U u = f_T_U.apply(t);
+        @NotNull T nn_t = surely(t);
+        @Nullable U u = f_T_U.apply(nn_t);
         if(u == null) return null;
-        @Nullable V v = f_U_V.apply(u);
+        @NotNull U nn_u = surely(u);
+        @Nullable V v = f_U_V.apply(nn_u);
         if(v == null) return null;
-        @Nullable W w = f_V_W.apply(v);
+        @NotNull V nn_v = surely(v);
+        @Nullable W w = f_V_W.apply(nn_v);
         if(w == null) return null;
-        @Nullable X x = f_W_X.apply(w);
+        @NotNull W nn_w = surely(w);
+        @Nullable X x = f_W_X.apply(nn_w);
         if(x == null) return null;
-        @Nullable Y y = f_X_Y.apply(x);
+        @NotNull X nn_x = surely(x);
+        @Nullable Y y = f_X_Y.apply(nn_x);
         if(y == null) return null;
-        @Nullable Z z = f_Y_Z.apply(y);
+        @NotNull Y nn_y = surely(y);
+        @Nullable Z z = f_Y_Z.apply(nn_y);
         if(z == null) return null;
-        return f_Z_A.apply(z);
+        @NotNull Z nn_z = surely(z);
+        return f_Z_A.apply(nn_z);
     }
 
     /**
@@ -470,21 +499,29 @@ public class Null4j {
             Function<? super A, B> f_A_B
     ) {
         if(t == null) return null;
-        @Nullable U u = f_T_U.apply(t);
+        @NotNull T nn_t = surely(t);
+        @Nullable U u = f_T_U.apply(nn_t);
         if(u == null) return null;
-        @Nullable V v = f_U_V.apply(u);
+        @NotNull U nn_u = surely(u);
+        @Nullable V v = f_U_V.apply(nn_u);
         if(v == null) return null;
-        @Nullable W w = f_V_W.apply(v);
+        @NotNull V nn_v = surely(v);
+        @Nullable W w = f_V_W.apply(nn_v);
         if(w == null) return null;
-        @Nullable X x = f_W_X.apply(w);
+        @NotNull W nn_w = surely(w);
+        @Nullable X x = f_W_X.apply(nn_w);
         if(x == null) return null;
-        @Nullable Y y = f_X_Y.apply(x);
+        @NotNull X nn_x = surely(x);
+        @Nullable Y y = f_X_Y.apply(nn_x);
         if(y == null) return null;
-        @Nullable Z z = f_Y_Z.apply(y);
+        @NotNull Y nn_y = surely(y);
+        @Nullable Z z = f_Y_Z.apply(nn_y);
         if(z == null) return null;
-        @Nullable A a = f_Z_A.apply(z);
+        @NotNull Z nn_z = surely(z);
+        @Nullable A a = f_Z_A.apply(nn_z);
         if(a == null) return null;
-        return f_A_B.apply(a);
+        @NotNull A nn_a = surely(a);
+        return f_A_B.apply(nn_a);
     }
 
     /**
@@ -510,23 +547,32 @@ public class Null4j {
             Function<? super B, C> f_B_C
     ) {
         if(t == null) return null;
-        @Nullable U u = f_T_U.apply(t);
+        @NotNull T nn_t = surely(t);
+        @Nullable U u = f_T_U.apply(nn_t);
         if(u == null) return null;
-        @Nullable V v = f_U_V.apply(u);
+        @NotNull U nn_u = surely(u);
+        @Nullable V v = f_U_V.apply(nn_u);
         if(v == null) return null;
-        @Nullable W w = f_V_W.apply(v);
+        @NotNull V nn_v = surely(v);
+        @Nullable W w = f_V_W.apply(nn_v);
         if(w == null) return null;
-        @Nullable X x = f_W_X.apply(w);
+        @NotNull W nn_w = surely(w);
+        @Nullable X x = f_W_X.apply(nn_w);
         if(x == null) return null;
-        @Nullable Y y = f_X_Y.apply(x);
+        @NotNull X nn_x = surely(x);
+        @Nullable Y y = f_X_Y.apply(nn_x);
         if(y == null) return null;
-        @Nullable Z z = f_Y_Z.apply(y);
+        @NotNull Y nn_y = surely(y);
+        @Nullable Z z = f_Y_Z.apply(nn_y);
         if(z == null) return null;
-        @Nullable A a = f_Z_A.apply(z);
+        @NotNull Z nn_z = surely(z);
+        @Nullable A a = f_Z_A.apply(nn_z);
         if(a == null) return null;
-        @Nullable B b = f_A_B.apply(a);
+        @NotNull A nn_a = surely(a);
+        @Nullable B b = f_A_B.apply(nn_a);
         if(b == null) return null;
-        return f_B_C.apply(b);
+        @NotNull B nn_b = surely(b);
+        return f_B_C.apply(nn_b);
     }
 
 
@@ -546,7 +592,8 @@ public class Null4j {
             Consumer<? super T> c_T
     ) {
         if(t == null) return;
-        c_T.accept(t);
+        @NotNull T nn_t = surely(t);
+        c_T.accept(nn_t);
     }
 
     /**
@@ -565,9 +612,11 @@ public class Null4j {
             Consumer<? super U> c_U
     ) {
         if(t == null) return;
-        @Nullable U u = f_T_U.apply(t);
+        @NotNull T nn_t = surely(t);
+        @Nullable U u = f_T_U.apply(nn_t);
         if(u == null) return;
-        c_U.accept(u);
+        @NotNull U nn_u = surely(u);
+        c_U.accept(nn_u);
     }
 
     /**
@@ -587,11 +636,14 @@ public class Null4j {
             Consumer<? super V> c_V
     ) {
         if(t == null) return;
-        @Nullable U u = f_T_U.apply(t);
+        @NotNull T nn_t = surely(t);
+        @Nullable U u = f_T_U.apply(nn_t);
         if(u == null) return;
-        @Nullable V v = f_U_V.apply(u);
+        @NotNull U nn_u = surely(u);
+        @Nullable V v = f_U_V.apply(nn_u);
         if(v == null) return;
-        c_V.accept(v);
+        @NotNull V nn_v = surely(v);
+        c_V.accept(nn_v);
     }
 
     /**
@@ -612,13 +664,17 @@ public class Null4j {
             Consumer<? super W> c_W
     ) {
         if(t == null) return;
-        @Nullable U u = f_T_U.apply(t);
+        @NotNull T nn_t = surely(t);
+        @Nullable U u = f_T_U.apply(nn_t);
         if(u == null) return;
-        @Nullable V v = f_U_V.apply(u);
+        @NotNull U nn_u = surely(u);
+        @Nullable V v = f_U_V.apply(nn_u);
         if(v == null) return;
-        @Nullable W w = f_V_W.apply(v);
+        @NotNull V nn_v = surely(v);
+        @Nullable W w = f_V_W.apply(nn_v);
         if(w == null) return;
-        c_W.accept(w);
+        @NotNull W nn_w = surely(w);
+        c_W.accept(nn_w);
     }
 
     /**
@@ -640,15 +696,20 @@ public class Null4j {
             Consumer<? super X> c_X
     ) {
         if(t == null) return;
-        @Nullable U u = f_T_U.apply(t);
+        @NotNull T nn_t = surely(t);
+        @Nullable U u = f_T_U.apply(nn_t);
         if(u == null) return;
-        @Nullable V v = f_U_V.apply(u);
+        @NotNull U nn_u = surely(u);
+        @Nullable V v = f_U_V.apply(nn_u);
         if(v == null) return;
-        @Nullable W w = f_V_W.apply(v);
+        @NotNull V nn_v = surely(v);
+        @Nullable W w = f_V_W.apply(nn_v);
         if(w == null) return;
-        @Nullable X x = f_W_X.apply(w);
+        @NotNull W nn_w = surely(w);
+        @Nullable X x = f_W_X.apply(nn_w);
         if(x == null) return;
-        c_X.accept(x);
+        @NotNull X nn_x = surely(x);
+        c_X.accept(nn_x);
     }
 
     /**
@@ -671,17 +732,23 @@ public class Null4j {
             Consumer<? super Y> c_Y
     ) {
         if(t == null) return;
-        @Nullable U u = f_T_U.apply(t);
+        @NotNull T nn_t = surely(t);
+        @Nullable U u = f_T_U.apply(nn_t);
         if(u == null) return;
-        @Nullable V v = f_U_V.apply(u);
+        @NotNull U nn_u = surely(u);
+        @Nullable V v = f_U_V.apply(nn_u);
         if(v == null) return;
-        @Nullable W w = f_V_W.apply(v);
+        @NotNull V nn_v = surely(v);
+        @Nullable W w = f_V_W.apply(nn_v);
         if(w == null) return;
-        @Nullable X x = f_W_X.apply(w);
+        @NotNull W nn_w = surely(w);
+        @Nullable X x = f_W_X.apply(nn_w);
         if(x == null) return;
-        @Nullable Y y = f_X_Y.apply(x);
+        @NotNull X nn_x = surely(x);
+        @Nullable Y y = f_X_Y.apply(nn_x);
         if(y == null) return;
-        c_Y.accept(y);
+        @NotNull Y nn_y = surely(y);
+        c_Y.accept(nn_y);
     }
 
     /**
@@ -705,19 +772,26 @@ public class Null4j {
             Consumer<? super Z> c_Z
     ) {
         if(t == null) return;
-        @Nullable U u = f_T_U.apply(t);
+        @NotNull T nn_t = surely(t);
+        @Nullable U u = f_T_U.apply(nn_t);
         if(u == null) return;
-        @Nullable V v = f_U_V.apply(u);
+        @NotNull U nn_u = surely(u);
+        @Nullable V v = f_U_V.apply(nn_u);
         if(v == null) return;
-        @Nullable W w = f_V_W.apply(v);
+        @NotNull V nn_v = surely(v);
+        @Nullable W w = f_V_W.apply(nn_v);
         if(w == null) return;
-        @Nullable X x = f_W_X.apply(w);
+        @NotNull W nn_w = surely(w);
+        @Nullable X x = f_W_X.apply(nn_w);
         if(x == null) return;
-        @Nullable Y y = f_X_Y.apply(x);
+        @NotNull X nn_x = surely(x);
+        @Nullable Y y = f_X_Y.apply(nn_x);
         if(y == null) return;
-        @Nullable Z z = f_Y_Z.apply(y);
+        @NotNull Y nn_y = surely(y);
+        @Nullable Z z = f_Y_Z.apply(nn_y);
         if(z == null) return;
-        c_Z.accept(z);
+        @NotNull Z nn_z = surely(z);
+        c_Z.accept(nn_z);
     }
 
     /**
@@ -742,21 +816,29 @@ public class Null4j {
             Consumer<? super A> c_A
     ) {
         if(t == null) return;
-        @Nullable U u = f_T_U.apply(t);
+        @NotNull T nn_t = surely(t);
+        @Nullable U u = f_T_U.apply(nn_t);
         if(u == null) return;
-        @Nullable V v = f_U_V.apply(u);
+        @NotNull U nn_u = surely(u);
+        @Nullable V v = f_U_V.apply(nn_u);
         if(v == null) return;
-        @Nullable W w = f_V_W.apply(v);
+        @NotNull V nn_v = surely(v);
+        @Nullable W w = f_V_W.apply(nn_v);
         if(w == null) return;
-        @Nullable X x = f_W_X.apply(w);
+        @NotNull W nn_w = surely(w);
+        @Nullable X x = f_W_X.apply(nn_w);
         if(x == null) return;
-        @Nullable Y y = f_X_Y.apply(x);
+        @NotNull X nn_x = surely(x);
+        @Nullable Y y = f_X_Y.apply(nn_x);
         if(y == null) return;
-        @Nullable Z z = f_Y_Z.apply(y);
+        @NotNull Y nn_y = surely(y);
+        @Nullable Z z = f_Y_Z.apply(nn_y);
         if(z == null) return;
-        @Nullable A a = f_Z_A.apply(z);
+        @NotNull Z nn_z = surely(z);
+        @Nullable A a = f_Z_A.apply(nn_z);
         if(a == null) return;
-        c_A.accept(a);
+        @NotNull A nn_a = surely(a);
+        c_A.accept(nn_a);
     }
 
     /**
@@ -782,23 +864,45 @@ public class Null4j {
             Consumer<? super B> c_B
     ) {
         if(t == null) return;
-        @Nullable U u = f_T_U.apply(t);
+        @NotNull T nn_t = surely(t);
+        @Nullable U u = f_T_U.apply(nn_t);
         if(u == null) return;
-        @Nullable V v = f_U_V.apply(u);
+        @NotNull U nn_u = surely(u);
+        @Nullable V v = f_U_V.apply(nn_u);
         if(v == null) return;
-        @Nullable W w = f_V_W.apply(v);
+        @NotNull V nn_v = surely(v);
+        @Nullable W w = f_V_W.apply(nn_v);
         if(w == null) return;
-        @Nullable X x = f_W_X.apply(w);
+        @NotNull W nn_w = surely(w);
+        @Nullable X x = f_W_X.apply(nn_w);
         if(x == null) return;
-        @Nullable Y y = f_X_Y.apply(x);
+        @NotNull X nn_x = surely(x);
+        @Nullable Y y = f_X_Y.apply(nn_x);
         if(y == null) return;
-        @Nullable Z z = f_Y_Z.apply(y);
+        @NotNull Y nn_y = surely(y);
+        @Nullable Z z = f_Y_Z.apply(nn_y);
         if(z == null) return;
-        @Nullable A a = f_Z_A.apply(z);
+        @NotNull Z nn_z = surely(z);
+        @Nullable A a = f_Z_A.apply(nn_z);
         if(a == null) return;
-        @Nullable B b = f_A_B.apply(a);
+        @NotNull A nn_a = surely(a);
+        @Nullable B b = f_A_B.apply(nn_a);
         if(b == null) return;
-        c_B.accept(b);
+        @NotNull B nn_b = surely(b);
+        c_B.accept(nn_b);
+    }
+
+    /**
+     * Hack to work around the checker issue that ternary operators get ignored in combination with type parameter annotations.
+     * @param t
+     * @param <T>
+     * @return
+     */
+    private static <T>
+    @NotNull T surely(@Nullable T t) {
+        // workaround for null checker deficiencies
+        Supplier<@NotNull T> hack = () -> (@NotNull T) Function.identity().apply(t);
+        return hack.get();
     }
 }
 
