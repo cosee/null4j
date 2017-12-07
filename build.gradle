@@ -1,5 +1,5 @@
 group 'biz.cosee.null4j'
-version '0.9.2'
+version '1.0.0'
 
 apply plugin: 'java'
 
@@ -43,6 +43,6 @@ publishing {
  
 model {
     tasks.generatePomFileForMavenPublication {
-        destination = file("$buildDir/libs/null4j-0.9.2.pom")
+        destination = file("$buildDir/libs/null4j-1.0.0.pom")
     }
 }

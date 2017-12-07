@@ -14,13 +14,13 @@
 	},
 	 
 	"version": {
-	  "name": "0.9.2",
-	  "released": "2017-06-21",
+	  "name": "1.0.0",
+	  "released": "2017-12-07",
 	  "gpgSign": false
 	},
 	 
 	"files": [
-		{"includePattern": "build/libs/(.*)", "uploadPattern": "biz/cosee/null4j/null4j/0.9.2/$1"}
+		{"includePattern": "build/libs/(.*)", "uploadPattern": "biz/cosee/null4j/null4j/1.0.0/$1"}
 	],
 	"publish": true
 }

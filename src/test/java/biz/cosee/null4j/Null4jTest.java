@@ -7,7 +7,7 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 import static biz.cosee.null4j.Null4j.let;
-import static biz.cosee.null4j.Null4j.orDefault;
+import static biz.cosee.null4j.Null4j.requireNonNullElse;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
@@ -56,42 +56,40 @@ public class Null4jTest {
         b.length();
 
         // ERROR: last parameter must be NotNull
-        orDefault(null, null);
-        orDefault(null, b); // compiler doesn't catch that one.
+        requireNonNullElse(null, null);
+        requireNonNullElse(null, b); // compiler doesn't catch that one.
 
     }
     //*/// <- magic comment delimiter, don't change this line.
-
-
     @Test
-    public void testOrDefault() throws Exception {
+    public void testRequireNonNullElse() throws Exception {
         assertThat(
-                orDefault("one", "two"),
+                requireNonNullElse("one", "two"),
                 is("one")
         );
         assertThat(
-                orDefault(null, "two"),
+                requireNonNullElse(null, "two"),
                 is("two")
         );
 
 
         assertThat(
-                orDefault("one", "two", "three"),
+                requireNonNullElse("one", "two", "three"),
                 is("one")
         );
         assertThat(
-                orDefault(null, "two", "three"),
+                requireNonNullElse(null, "two", "three"),
                 is("two")
         );
         assertThat(
-                orDefault(null, null, "three"),
+                requireNonNullElse(null, null, "three"),
                 is("three")
         );
 
         // it should support up to 10 parameters
 
         assertThat(
-                orDefault(
+                requireNonNullElse(
                         "1",
                         "2",
                         "3",
@@ -106,7 +104,7 @@ public class Null4jTest {
                 is("1")
         );
         assertThat(
-                orDefault(
+                requireNonNullElse(
                         null,
                         null,
                         null,
@@ -143,11 +141,15 @@ public class Null4jTest {
 
         String[] mutable = new String[]{"1"};
 
-        let("?", o -> { mutable[0] = "2"; });
-        assertThat( mutable[0], is("2") );
+        let("?", o -> {
+            mutable[0] = "2";
+        });
+        assertThat(mutable[0], is("2"));
 
-        let(null, o -> { mutable[0] = "3"; });
-        assertThat( mutable[0], is("2") );
+        let(null, o -> {
+            mutable[0] = "3";
+        });
+        assertThat(mutable[0], is("2"));
 
         // it should support up to 10 parameters.
         assertThat(
@@ -174,7 +176,9 @@ public class Null4jTest {
                 Function.identity(),
                 Function.identity(),
                 Function.identity(),
-                o -> { mutable[0] = "10"; }
+                o -> {
+                    mutable[0] = "10";
+                }
         );
         assertThat(
                 mutable[0],

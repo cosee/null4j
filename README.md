@@ -2,7 +2,7 @@
 
 With null4j, your code will have less NullPointerExceptions and more readable null checks.
 
-_v0.9.2_
+_v1.0.0_
 
 ```java
 @NotNullByDefault
@@ -24,7 +24,7 @@ class Example {
 	String getStreetName(Person person) {
 
 		// avoid returning null by using a default value
-		return orDefault(let(person,
+		return requireNonNullElse(let(person,
 				Person::getAddress,
 				Address::getStreet,
 				Street::getStreetName
@@ -39,7 +39,7 @@ class Example {
 To keep it simple, null4j only contains three features:
 
   - @NotNullByDefault
-  - orDefault
+  - requireNonNullElse
   - let
 
 ### @NotNullByDefault
@@ -74,10 +74,10 @@ The order is important: It won't work if you put the import before the annotatio
 
 Note: The annotation does not work recursively yet so sub packages need their own package-info.java.
 
-### orDefault
+### requireNonNullElse
 
 ```java
-<T> T orDefault((@Nullable T)... nullables, T defaultValue)
+<T> T requireNonNullElse((@Nullable T)... nullables, T defaultValue)
 ```
 
 Returns the first not null parameter. The last parameter must not be null.
@@ -99,21 +99,21 @@ doSomethingWith(s);
 
 // Java 8:
 
-String s = someMap.getOrDefault(key, "");
+String s = someMap.getrequireNonNullElse(key, "");
 
 doSomethingWith(s);
 
 
 // null4j:
 
-String s = orDefault(someMap.get(key), "");
+String s = requireNonNullElse(someMap.get(key), "");
 
 doSomethingWith(s);
 
 
 void example(@Nullable Thing thing) {
 
-	Thing t = orDefault(thing, Things.STANDARD_THING);
+	Thing t = requireNonNullElse(thing, Things.STANDARD_THING);
 
 	doSomethingWith(t);
 
@@ -186,7 +186,7 @@ void example() {
 
 ### Default Parameters
 
-If method overloading is not an option because the method has too many parameters, orDefault can be used to declare default values for nullable parameters.
+If method overloading is not an option because the method has too many parameters, requireNonNullElse can be used to declare default values for nullable parameters.
 
 ```java
 void displayInfo(
@@ -197,9 +197,9 @@ void displayInfo(
 	@Nullable String designation
 ) {
 	// Set defaults for nullable parameters at the beginning of the method.
-	name = orDefault(name, "no name");
-	comment = orDefault(comment, "");
-	designation = orDefault(designation, "no designation");
+	name = requireNonNullElse(name, "no name");
+	comment = requireNonNullElse(comment, "");
+	designation = requireNonNullElse(designation, "no designation");
 
 
 	// ...
@@ -223,10 +223,10 @@ Suppose you have some nested types. With let, you can easily reach into them wit
 }
 ```
 
-### Combining orDefault and let
+### Combining requireNonNullElse and let
 
 ```java
-return orDefault(let(person,
+return requireNonNullElse(let(person,
 	Person::getId,
 	commentMap::get,
 	String::toUpperCase
