@@ -321,7 +321,7 @@ It's currently available on JCenter. Adding it to Maven Central is planned.
   	<dependency>
   		<groupId>biz.cosee.null4j</groupId>
   		<artifactId>null4j</artifactId>
-  		<version>0.9.2</version>
+  		<version>1.0.0</version>
   	</dependency>
   </dependencies>
   <repositories>
@@ -340,7 +340,7 @@ repositories {
 }
 
 dependencies {
-    compile 'biz.cosee.null4j:null4j:0.9.2'
+    compile 'biz.cosee.null4j:null4j:1.0.0'
 }
 ```
 
