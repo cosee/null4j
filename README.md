@@ -1,6 +1,6 @@
 ![null4j logo](null4jlogosmall.png)
 
-With null4j, your code will have less NullPointerExceptions and more readable null checks.
+With null4j, your code will have fewer NullPointerExceptions and more readable null checks.
 
 _v1.0.0_
 
@@ -20,7 +20,7 @@ class Example {
 			Address::getStreet);
 	}
 
-	// implicitely NotNull
+	// implicitly NotNull
 	String getStreetName(Person person) {
 
 		// avoid returning null by using a default value
